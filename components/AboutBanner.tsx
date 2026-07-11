@@ -43,7 +43,7 @@ export default function AboutBanner() {
         </h1>
         <p className="text-xl text-warm-cloud/90 max-w-2xl">
           {/* PLACEHOLDER: ganti dengan tagline tentang halaman */}
-          Kenali tim di balik perjalanan impian Anda
+          Kenali kami di balik perjalanan impian Anda
         </p>
       </div>
 
