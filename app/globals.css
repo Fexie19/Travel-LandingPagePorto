@@ -1,26 +1,284 @@
 @import "tailwindcss";
 
+/* Note: Google Fonts are loaded via Next.js in app/layout.tsx for optimal performance */
+
+/* Design Tokens - Travel Theme */
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  /* Primary Colors */
+  --ocean-deep: #0D5C63;
+  --ocean-deep-dark: #094449;
+  --sunset-amber: #F2A93B;
+  --sunset-amber-light: #F5BC6A;
+  --palm-green: #4C9A6A;
+  --palm-green-light: #6BB589;
+
+  /* Neutral Colors */
+  --warm-cloud: #F6F4EF;
+  --warm-cloud-dark: #EBE8E1;
+  --slate-navy: #1E2A32;
+  --slate-navy-light: #3A4A55;
+
+  /* Functional Colors */
+  --success: #22C55E;
+  --error: #EF4444;
+  --warning: #F59E0B;
 }
 
 @theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+  /* Colors */
+  --color-ocean-deep: var(--ocean-deep);
+  --color-ocean-deep-dark: var(--ocean-deep-dark);
+  --color-sunset-amber: var(--sunset-amber);
+  --color-sunset-amber-light: var(--sunset-amber-light);
+  --color-palm-green: var(--palm-green);
+  --color-palm-green-light: var(--palm-green-light);
+  --color-warm-cloud: var(--warm-cloud);
+  --color-warm-cloud-dark: var(--warm-cloud-dark);
+  --color-slate-navy: var(--slate-navy);
+  --color-slate-navy-light: var(--slate-navy-light);
+
+  /* Typography - using Next.js font variables from layout.tsx */
+  --font-serif: var(--font-fraunces), Georgia, serif;
+  --font-sans: var(--font-plus-jakarta), system-ui, sans-serif;
+
+  /* Spacing */
+  --container-max: 1280px;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+/* Base Styles */
+html {
+  scroll-behavior: smooth;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
   }
 }
 
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: var(--font-sans);
+  color: var(--slate-navy);
+  background: white;
+  line-height: 1.6;
+}
+
+/* Focus Styles for Accessibility */
+:focus-visible {
+  outline: 2px solid var(--ocean-deep);
+  outline-offset: 2px;
+}
+
+/* Passport Stamp Badge Component */
+.passport-stamp {
+  position: relative;
+  display: inline-flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 1rem 1.5rem;
+  border: 3px solid var(--ocean-deep);
+  border-radius: 50%;
+  background: linear-gradient(135deg, white 0%, var(--warm-cloud) 100%);
+  box-shadow: 2px 2px 8px rgba(0, 0, 0, 0.1);
+  transform: rotate(-3deg);
+}
+
+.passport-stamp::before {
+  content: '';
+  position: absolute;
+  inset: 4px;
+  border: 1px dashed var(--ocean-deep);
+  border-radius: 50%;
+  opacity: 0.3;
+}
+
+/* Floating WhatsApp Button */
+@keyframes pulse-wa {
+  0%, 100% {
+    transform: scale(1);
+    box-shadow: 0 4px 12px rgba(37, 211, 102, 0.4);
+  }
+  50% {
+    transform: scale(1.05);
+    box-shadow: 0 6px 20px rgba(37, 211, 102, 0.6);
+  }
+}
+
+.pulse-wa {
+  animation: pulse-wa 2s ease-in-out infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .pulse-wa {
+    animation: none;
+  }
+}
+
+/* Custom Scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--warm-cloud);
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--ocean-deep);
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--ocean-deep-dark);
+}
+
+/* Lazy Load Images */
+img[data-src] {
+  opacity: 0;
+  transition: opacity 0.3s ease-in;
+}
+
+img[data-src].loaded,
+img:not([data-src]) {
+  opacity: 1;
+}
+
+/* Card Hover Effect */
+.card-hover {
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.card-hover:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 12px 24px rgba(0, 0, 0, 0.1);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .card-hover {
+    transition: none;
+  }
+  .card-hover:hover {
+    transform: none;
+  }
+}
+
+/* Button Primary */
+.btn-primary {
+  background-color: var(--ocean-deep);
+  color: white;
+  padding: 0.75rem 1.5rem;
+  border-radius: 0.5rem;
+  font-weight: 600;
+  transition: background-color 0.2s ease, transform 0.2s ease;
+}
+
+.btn-primary:hover {
+  background-color: var(--ocean-deep-dark);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .btn-primary:hover {
+    transform: none;
+  }
+}
+
+/* Button CTA (Sunset Amber) */
+.btn-cta {
+  background-color: var(--sunset-amber);
+  color: var(--slate-navy);
+  padding: 0.75rem 1.5rem;
+  border-radius: 0.5rem;
+  font-weight: 600;
+  transition: background-color 0.2s ease, transform 0.2s ease;
+}
+
+.btn-cta:hover {
+  background-color: var(--sunset-amber-light);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .btn-cta:hover {
+    transform: none;
+  }
+}
+
+/* Container */
+.container-custom {
+  max-width: var(--container-max);
+  margin-left: auto;
+  margin-right: auto;
+  padding-left: 1rem;
+  padding-right: 1rem;
+}
+
+@media (min-width: 640px) {
+  .container-custom {
+    padding-left: 1.5rem;
+    padding-right: 1.5rem;
+  }
+}
+
+@media (min-width: 1024px) {
+  .container-custom {
+    padding-left: 2rem;
+    padding-right: 2rem;
+  }
+}
+
+/* Section Spacing */
+.section-spacing {
+  padding-top: 4rem;
+  padding-bottom: 4rem;
+}
+
+@media (min-width: 768px) {
+  .section-spacing {
+    padding-top: 6rem;
+    padding-bottom: 6rem;
+  }
+}
+
+@media (min-width: 1024px) {
+  .section-spacing {
+    padding-top: 8rem;
+    padding-bottom: 8rem;
+  }
+}
+
+/* Mobile Horizontal Scroll for Packages */
+.scroll-container {
+  display: flex;
+  gap: 1rem;
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  -webkit-overflow-scrolling: touch;
+  padding-bottom: 1rem;
+  scrollbar-width: thin;
+}
+
+.scroll-container > * {
+  scroll-snap-align: start;
+  flex-shrink: 0;
+}
+
+/* Testimonial Carousel */
+.testimonial-track {
+  display: flex;
+  gap: 1.5rem;
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  scroll-behavior: smooth;
+  padding-bottom: 1rem;
+  scrollbar-width: none;
+}
+
+.testimonial-track::-webkit-scrollbar {
+  display: none;
+}
+
+.testimonial-card {
+  scroll-snap-align: center;
+  flex-shrink: 0;
 }
